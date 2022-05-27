@@ -1,0 +1,81 @@
+class Solution {
+    
+    public final int DEAD=2;
+    public final int LIVE=3;
+    public int[] neighbors={0,1,-1};
+    public void gameOfLife(int[][] board) {
+        
+        
+        int row=board.length;
+        int col=board[0].length;
+        int neiCount=0;
+        
+        int[][] result=new int[row][col];
+        
+        for(int i=0;i<row;i++)
+        {
+            for(int j=0;j<col;j++)
+            {
+                result[i][j]=board[i][j];
+            }
+        }
+        
+        for(int i=0;i<row;i++)
+        {
+            for(int j=0;j<col;j++)
+            {
+                neiCount=calculateNeighbors(board,i,j);
+                //System.out.println(neiCount);
+                if(board[i][j]==1 && (neiCount<2 || neiCount>3))
+                {
+                    result[i][j]=DEAD;
+                }
+               
+                else if(board[i][j]==0 && (neiCount==3))
+                {
+                    result[i][j]=LIVE;
+                }
+            }
+        }
+        
+        for(int i=0;i<row;i++)
+        {
+            for(int j=0;j<col;j++)
+            {
+                if(result[i][j]==DEAD)
+                {
+                    board[i][j]=0;
+                }
+                else if(result[i][j]==LIVE)
+                {
+                    board[i][j]=1;
+                }
+                
+            }}
+        
+    }
+    
+    public int calculateNeighbors(int[][] board,int i,int j)
+    {
+        int neiCount=0;
+        for(int neiRow=0;neiRow<3;neiRow++)
+        {
+            for(int neiCol=0;neiCol<3;neiCol++)
+            {
+                if(!(neighbors[neiRow]==0 && neighbors[neiCol]==0))
+                {
+                
+                    int newRow=i+neighbors[neiRow];
+                    int newCol=j+neighbors[neiCol];
+                    
+                    if(newRow>=0 && newRow<board.length && newCol<board[0].length && newCol>=0 && board[newRow][newCol]==1){
+                   
+                        neiCount++;
+                    }
+            }
+        }
+        }
+             return neiCount;}
+   
+    
+}
