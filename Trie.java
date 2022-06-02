@@ -3,16 +3,7 @@
 import java.util.HashMap;
 
 
-public class Trie {
-
-
-    public static void main(String[] args)
-    {
-        Trie obj=new Trie();
-        obj.insert("sravya");
-        System.out.println(obj.search("sraya"));
-        System.out.println(obj.startsWith("sra"));
-    }
+class Trie {
 
     TrieNode root;
     public Trie() {
@@ -21,6 +12,7 @@ public class Trie {
         root.setLetter('/');
         root.setEndLetter(false);
     }
+
 
     public void insert(String word) {
 
@@ -33,19 +25,17 @@ public class Trie {
             {
                 TrieNode newNode=new TrieNode();
                 newNode.setLetter(w);
-                boolean isEnd= i==word.length()-1?true:false;
-                newNode.setEndLetter(isEnd);
                 node.nextLetters.put(w,newNode);
             }
             node=node.nextLetters.get(w);
+
         }
+        node.setEndLetter(true);
 
     }
 
     public boolean search(String word) {
-
         TrieNode node=root;
-        boolean endWith=false;
         for(int i=0;i<word.length();i++)
         {
             char w=word.charAt(i);
@@ -54,17 +44,18 @@ public class Trie {
                 return false;
             }
             node=node.nextLetters.get(w);
-            endWith=node.isEndLetter();
         }
-        return endWith;
+        return node.isEndLetter();
+
     }
-    public boolean startsWith(String word) {
+
+    public boolean startsWith(String prefix) {
 
         TrieNode node=root;
         boolean endWith=false;
-        for(int i=0;i<word.length();i++)
+        for(int i=0;i<prefix.length();i++)
         {
-            char w=word.charAt(i);
+            char w=prefix.charAt(i);
             if(!node.nextLetters.containsKey(w))
             {
                 return false;
@@ -72,7 +63,6 @@ public class Trie {
             node=node.nextLetters.get(w);
         }
         return true;
+
     }
 }
-
-
