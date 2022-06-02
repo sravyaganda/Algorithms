@@ -1,0 +1,70 @@
+class Solution {
+    
+    Map<Integer,Integer> color;
+    Map<Integer,List<Integer>> adjList;
+    boolean isPossible;
+    
+    static int WHITE=1;
+    static int GRAY=2;
+    static int BLACK=3;
+    
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+     
+        
+        color=new HashMap<Integer,Integer>();
+        adjList=new HashMap<Integer,List<Integer>>();
+        isPossible=true;
+        
+        for(int[] course:prerequisites)
+        {
+            if(!adjList.containsKey(course[1]))
+            {
+                adjList.put(course[1],new ArrayList<Integer>());
+            }
+            
+            adjList.get(course[1]).add(course[0]);
+        }
+        
+        for(int i=0;i<numCourses;i++)
+        {
+           this.color.put(i,WHITE);
+            
+        }
+        
+        
+        for(int i=0;i<numCourses;i++)
+        {
+            if(this.color.get(i)==WHITE)
+            {
+                dfs(i);
+            }
+        }
+        
+        return isPossible;
+      
+    }
+    
+    private void dfs(int course)
+    {
+        if(!isPossible)
+        {
+            return;
+        }
+        
+        this.color.put(course,GRAY);
+        
+        for(Integer dependent: adjList.getOrDefault(course,new ArrayList<Integer>()))
+        {
+            if(this.color.get(dependent)==WHITE)
+            {
+                dfs(dependent);
+            }
+            else if(this.color.get(dependent)==GRAY)
+            {
+                this.isPossible=false;
+            }
+        }
+        
+        this.color.put(course,BLACK);
+    }
+}

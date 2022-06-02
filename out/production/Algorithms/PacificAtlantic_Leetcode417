@@ -1,0 +1,82 @@
+class Solution {
+    
+    private static final int[][] DIRECTIONS=new int[][]{{0,1},{1,0},{-1,0},{0,-1}};
+    
+    private int numRows;
+    private int numCols;
+    private int[][] landHeights;
+    
+    public List<List<Integer>> pacificAtlantic(int[][] heights) {
+        
+        if(heights.length==0|| heights[0].length==0)
+        {
+            return new ArrayList();
+        }
+        
+        numRows=heights.length;
+        numCols=heights[0].length;
+        landHeights=heights;
+        
+        Queue<int[]> pacificHeight=new LinkedList<int[]>();
+        Queue<int[]> atlanticHeight=new LinkedList<int[]>();
+        
+        for(int i=0;i<numRows;i++)
+        {
+            pacificHeight.add(new int[]{i,0});
+            atlanticHeight.add(new int[]{i,numCols-1});
+        }
+        
+        for(int i=0;i<numCols;i++)
+        {
+             pacificHeight.add(new int[]{0,i});
+            atlanticHeight.add(new int[]{numRows-1,i});
+        }
+        
+        boolean[][] pacificReachable=bfs(pacificHeight);
+        boolean[][] atlanticReachable=bfs(atlanticHeight);
+        
+        List<List<Integer>> result=new ArrayList();
+        
+        for(int i=0;i<numRows;i++)
+        {
+            for(int j=0;j<numCols;j++)
+            {
+                if(pacificReachable[i][j] && atlanticReachable[i][j])
+                {
+                    result.add(List.of(i,j));
+                }
+            }
+        }
+        
+        return result;
+        
+        
+    }
+    
+    
+    public boolean[][] bfs(Queue<int[]> queue)
+    {
+        boolean[][] visited= new boolean[numRows][numCols];
+        
+        while(!queue.isEmpty())
+        {
+            int[] cell=queue.poll();
+            
+            visited[cell[0]][cell[1]]=true;
+            for(int[] dir:DIRECTIONS)
+            {
+                int newRow=cell[0]+dir[0];
+                int newCol=cell[1]+dir[1];
+                
+                if(newRow<0||newCol<0|| newRow>=numRows||newCol>=numCols || visited[newRow][newCol] || landHeights[newRow][newCol]<landHeights[cell[0]][cell[1]])
+                {
+                    continue;
+                }
+          queue.add(new int[]{newRow,newCol});      
+              
+            }
+        }
+        
+        return visited;
+    }
+}
