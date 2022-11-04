@@ -1,33 +1,51 @@
 package ArraysandStrings;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class IsUnique {
 
     public static void main(String[] args) {
-        String s = "srvya";
 
-        if (isUnique(s)) {
-            System.out.println("String " + s + " " + "has unique characters");
-        } else {
-            System.out.println("String " + s + " " + "has duplicate characters");
-        }
+List<String> s=new ArrayList<>() ;
+s.add("azbde");
+s.add("abcher");
+s.add("acegk");
+int m=3;
+System.out.println(solve(2,s));
     }
 
-    public static boolean isUnique(String s) {
-        boolean[] chars = new boolean[128];
-        Arrays.fill(chars, false);
 
-        for (int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
+    public static String solve(int m, List<String> s) {
 
-            if (chars[c]) {
-                return false;
+       long sum=0;
+       long div=2;
+        for(int i=0;i<s.size();i++)
+        {
+            String str=s.get(i);
+            long product=1;
+
+            for(char c:str.toCharArray())
+            {
+                int cValue=c;
+                product*=(int) Math.pow(cValue,m);
             }
-            if (!chars[c]) {
-                chars[c] = true;
-            }
+           System.out.println(product);
+            sum+=product;
         }
-        return true;
+
+        System.out.println(sum%div);
+        if(sum%div==0)
+        {
+            return "EVEN";
+        }
+        else
+        {
+            return "ODD";
+        }
+
     }
+
+
 }
