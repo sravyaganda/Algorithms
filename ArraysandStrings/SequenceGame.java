@@ -1,6 +1,9 @@
 package ArraysandStrings;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class SequenceGame {
 
@@ -12,18 +15,36 @@ public class SequenceGame {
 
     public static void main(String[] args) {
 
-        char player = 'b';
-        char[][] board = {{'0', '0', '0', '0', 'b', '0', '0', '0'}
-                , {'0', '0', '0', '0', 'b', '0', '0', '0',},
-                {'0', '0', '0', '0', 'b', '0', '0', '0'},
-                {'0', '0', '0', '0', 'b', '0', '0', '0'},
-                {'0', '0', '0', '0', 'b', '0', '0', 'b'},
-                {'0', '0', '0', '0', '0', 'b', '0', 'b',},
-                {'0', '0', '0', '0', '0', '0', 'b', 'b'},
-                {'0', '0', '0', '0', '0', '0', '0', 'b'}
-        };
-        System.out.println(checkSequenceCount(board, player));
+        char player = 'i';
+//        char[][] board = {{'i', '0', '0', '0', 'b', '0', '0', '0'}
+//                , {'i', '0', '0', '0', 'b', '0', '0', '0',},
+//                {'i', '0', '0', '0', 'b', '0', '0', '0'},
+//                {'0', '0', '0', '0', 'b', '0', '0', '0'},
+//                {'0', '0', '0', '0', 'b', '0', '0', 'b'},
+//                {'0', '0', '0', '0', '0', 'b', '0', 'b',},
+//                {'0', '0', '0', '0', '0', '0', 'b', 'b'},
+//                {'0', '0', '0', '0', '0', '0', '0', 'b'}
+//        };
+//        System.out.println(readBoard());
+        System.out.println(checkSequenceCount(readBoard(), player));
     }
+
+    public static char[][] readBoard() {
+        char[][] newArray = new char[10][10];
+        try {
+            Scanner scanner = new Scanner(new File("/Users/sravyaganda/sq1.txt"));
+            int index = 0;
+            while (scanner.hasNextLine()) {
+                char[] tmpVal = scanner.nextLine().toCharArray();
+                newArray[index++]=tmpVal;
+            }
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return newArray;
+    };
 
     public static int checkSequenceCount(char[][] board, char player) {
 
@@ -60,7 +81,8 @@ public class SequenceGame {
         if (cell[0] < 0 || cell[1] < 0 || cell[0] >= row || cell[1] >= col || board[cell[0]][cell[1]] != player) {
             return false;
         }
-        if ((seqCount == 5 && !cornerCell) || (seqCount==4 && cornerCell)|| (seqCount == 4 && checkIfCornerCell(cell[0], cell[1]))) {
+        if ((seqCount == 5))
+        {
             return true;
         }
         visited[cell[0]][cell[1]] = true;
@@ -72,10 +94,10 @@ public class SequenceGame {
         return seqFound;
     }
 
-    public static boolean checkIfCornerCell(int i, int j) {
-        if ((i == 0 && j == 0) || (i == row - 1 && j == col - 1) || (i == 0 && j == col - 1) || (i == row - 1 && j == 0)) {
-            return true;
-        }
-        return false;
-    }
+//    public static boolean checkIfCornerCell(int i, int j) {
+//        if ((i == 0 && j == 0) || (i == row - 1 && j == col - 1) || (i == 0 && j == col - 1) || (i == row - 1 && j == 0)) {
+//            return true;
+//        }
+//        return false;
+//    }
 }
