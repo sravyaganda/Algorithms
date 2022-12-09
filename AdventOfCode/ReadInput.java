@@ -125,7 +125,21 @@ public class ReadInput {
 
         return input;
     };
+    public static List<String> readAOC8() {
+        List<String> input = new ArrayList<String>();
+        try {
+            Scanner scanner = new Scanner(new File("/Users/sravyaganda/AdventOfCode/aoc8.txt"));
+            int index = 0;
+            while (scanner.hasNextLine()) {
+                input.add(scanner.nextLine().toString()) ;
+            }
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
+        return input;
+    };
 
     public static List<String> readAOC201509() {
         List<String> input = new ArrayList<String>();

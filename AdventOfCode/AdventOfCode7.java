@@ -56,7 +56,7 @@ public class AdventOfCode7 {
         }
 
         int spaceUsed=result;
-        while(stack.size()>1)
+        while(stack.size()>2)
         {
             int currentSpace=spaceUsed+stack.pop();
             int newSpace=currentSpace+stack.pop();
@@ -65,7 +65,7 @@ public class AdventOfCode7 {
 
         int freespace= (70000000-stack.pop());
         int result2=Integer.MAX_VALUE;
-       System.out.println(freespace);
+       System.out.println("FreeSpace"+"-"+freespace);
        result=0;
         for (int i = 0; i < commands.size(); i++) {
             String command = commands.get(i);
@@ -76,6 +76,7 @@ public class AdventOfCode7 {
 
                 if(freespace+result>30000000)
                 {
+                    System.out.println("result2"+" - "+ result2);
                     result2=Math.min(result,result2);
                     System.out.println("result2"+" - "+ result2);
                 }
@@ -92,6 +93,7 @@ public class AdventOfCode7 {
             int currentSpace=result+stack.pop();
             if(currentSpace+freespace>30000000)
             {
+                System.out.println("result2"+" - "+ result2);
                 result2=Math.min(result,result2);
             }
             int newSpace=currentSpace+stack.pop();
